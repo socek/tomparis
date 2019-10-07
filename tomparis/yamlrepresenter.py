@@ -16,10 +16,13 @@ SORTING = [
     "containers",
     "image",
     "imagePullPolicy",
+    "resources",
     "type",
     "ports",
     "env",
     "envFrom",
+    "command",
+    "args",
 ]
 
 

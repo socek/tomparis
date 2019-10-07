@@ -3,39 +3,16 @@ from tomparis.objects import KubernetesObject
 
 
 class ServicePort(Config):
-    def __init__(self):
-        super().__init__()
-        self.port = None
-        self.target_port = None
-        self.protocol = None
-        self.name = None
-
-    @Field("port")
-    def get_port(self):
-        return self.port
-
-    @Field("targetPort")
-    def get_target_port(self):
-        return self.target_port
-
-    @Field("protocol")
-    def get_protocol(self):
-        return self.protocol
-
-    @Field("name")
-    def get_name(self):
-        return self.name
+    port = Field()
+    target_port = Field(name="targetPort")
+    protocol = Field()
+    name = Field()
 
 
-class Service(KubernetesObject):
-    api_version = "v1"
-    kind = "Service"
-
-    def __init__(self):
-        super().__init__()
-        self.ports = []
-        self.type = None
-        self.selector = {}
+class ServiceSpec(Config):
+    ports = Field(list)
+    type = Field()
+    selector = Field(dict)
 
     def add_port(self, port, target_port, protocol=None, name=None):
         service_port = ServicePort()
@@ -45,14 +22,9 @@ class Service(KubernetesObject):
         service_port.name = name
         self.ports.append(service_port)
 
-    @Field("ports")
-    def get_ports(self):
-        return self.ports
 
-    @Field("type")
-    def get_type(self):
-        return self.type
+class Service(KubernetesObject):
+    api_version = "v1"
+    kind = "Service"
 
-    @Field("selector")
-    def get_selector(self):
-        return self.selector
+    spec = Field(ServiceSpec)

@@ -1,0 +1,12 @@
+core:
+  autogenerate_uid: false
+settings:
+  me: 10
+  super: "10"
+elo:
+  super: 10
+  updated: 2
+  hams:
+    - 1
+    - 2
+    - 3

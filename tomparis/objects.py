@@ -6,18 +6,6 @@ class KubernetesObject(Config):
     api_version = None
     kind = None
 
-    def __init__(self):
-        super().__init__()
-        self.metadata = Metadata()
-
-    @Field("apiVersion")
-    def get_api_version(self):
-        return self.api_version
-
-    @Field("kind")
-    def get_kind(self):
-        return self.kind
-
-    @Field("metadata")
-    def get_metadata(self):
-        return self.metadata
+    metadata = Field(Metadata)
+    _api_version = Field(lambda instance: instance.api_version, name="apiVersion")
+    _kind = Field(lambda instance: instance.kind, name="kind")
