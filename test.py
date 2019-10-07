@@ -1,7 +1,5 @@
-from tomparis.configmap import ConfigMap
-from tomparis.container import Container
-from tomparis.deployment import Deployment
-from tomparis.service import Service
+from tomparis.defs.apps.v1 import Deployment
+from tomparis.defs.core.v1 import ConfigMap, Container, Service
 from tomparis.ship import Shipment
 
 

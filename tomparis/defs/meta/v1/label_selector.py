@@ -1,10 +1,6 @@
 from tomparis.config import Config, Field
 
-
-class LabelSelectorRequirement(Config):
-    key = Field()
-    operator = Field()
-    values = Field(list)
+from .label_selector_requirement import LabelSelectorRequirement
 
 
 class LabelSelector(Config):

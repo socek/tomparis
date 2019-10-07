@@ -1,6 +1,7 @@
 from tomparis.config import Field
 from tomparis.objects import KubernetesObject
-from tomparis.meta import Metadata
+
+from tomparis.defs.meta.v1 import ObjectMeta
 
 
 class ConfigMap(KubernetesObject):
@@ -8,4 +9,4 @@ class ConfigMap(KubernetesObject):
     kind = "ConfigMap"
     data = Field(dict)
     binary_data = Field(dict, "binaryData")
-    metadata = Field(Metadata)
+    metadata = Field(ObjectMeta)
