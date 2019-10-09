@@ -5,17 +5,17 @@ from tomparis.ship import Shipment
 
 class MyConfig(ConfigMap):
     def prepare(self):
-        self.metadata.name = "NaMe"
+        self.metadata.name = "name"
         self.metadata.namespace = "namespace"
-        self.metadata.labels["elo"] = 10
-        self.data["ELO"] = self.settings["elo"]["super"]
+        self.metadata.labels["hello"] = "me"
+        self.data["elo"] = "CC"
 
 
 class MyService(Service):
     def prepare(self):
-        self.metadata.name = "NaMe Service"
+        self.metadata.name = "name-service"
         self.metadata.labels["thisis"] = "service"
-        self.spec.add_port(80, 80, name="UPS")
+        self.spec.add_port(80, 80, name="ups")
         self.spec.selector["termos"] = "howmelksow"
         self.spec.type = "ClusterIP"
 
@@ -26,13 +26,13 @@ class MyContainer(Container):
         self.image_pull_policy = "IfNotPresent"
         self.add_port("http", 80, "TCP")
         self.add_env_from("configMapRef", "database")
-        self.add_env("HELLO", 10)
+        self.add_env("HELLO", "10")
         self.add_env("ME", "heLpe")
 
-        self.resources.limits.cpu = 1
-        self.resources.limits.memory = 2
-        self.resources.requests.cpu = 3
-        self.resources.requests.memory = 4
+        self.resources.limits.cpu = "1cpu"
+        self.resources.limits.memory = "2MBi"
+        self.resources.requests.cpu = "3cpus"
+        self.resources.requests.memory = "4MBi"
 
         self.command = ["/bin/bash", "-c"]
         self.args = ["some", "args"]

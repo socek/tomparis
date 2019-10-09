@@ -1,11 +1,12 @@
-from tomparis.model import Model, Field
+from tomparis.fields import ModelField, StringField
+from tomparis.model import Model
 
 
 class ResourceRequirementsElement(Model):
-    cpu = Field()
-    memory = Field()
+    cpu = StringField()
+    memory = StringField()
 
 
 class ResourceRequirements(Model):
-    limits = Field(ResourceRequirementsElement)
-    requests = Field(ResourceRequirementsElement)
+    limits = ModelField(ResourceRequirementsElement)
+    requests = ModelField(ResourceRequirementsElement)

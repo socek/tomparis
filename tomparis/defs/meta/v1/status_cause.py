@@ -1,7 +1,8 @@
-from tomparis.model import Model, Field
+from tomparis.fields import StringField
+from tomparis.model import Model
 
 
 class StatusCause(Model):
-    field = Field()
-    message = Field()
-    reason = Field()
+    field = StringField()
+    message = StringField()
+    reason = StringField()

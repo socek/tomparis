@@ -1,8 +1,9 @@
-from tomparis.model import Model, Field
+from tomparis.fields import StringField
+from tomparis.model import Model
 
 
 class SELinuxOptions(Model):
-    level = Field()
-    role = Field()
-    type = Field()
-    user = Field()
+    level = StringField()
+    role = StringField()
+    type = StringField()
+    user = StringField()

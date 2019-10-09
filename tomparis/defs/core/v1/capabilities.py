@@ -1,6 +1,7 @@
-from tomparis.model import Model, Field
+from tomparis.model import Model
+from tomparis.fields import ListField
 
 
 class Capabilities(Model):
-    add = Field()
-    drop = Field()
+    add = ListField(str)
+    drop = ListField(str)

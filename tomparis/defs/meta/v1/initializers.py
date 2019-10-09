@@ -1,8 +1,10 @@
-from tomparis.model import Model, Field
+from tomparis.fields import ListField, ModelField
+from tomparis.model import Model
 
+from .initializer import Initializer
 from .status import Status
 
 
 class Initializers(Model):
-    pending = Field(list)  # Initializer
-    result = Field(Status)
+    pending = ListField(Initializer)
+    result = ModelField(Status)

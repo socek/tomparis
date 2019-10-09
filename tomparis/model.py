@@ -1,5 +1,10 @@
 class ValidatorError(Exception):
-    pass
+    def __init__(self, validator, value):
+        self.validator = validator
+        self.value = value
+
+    def __str__(self):
+        return f"[{self.validator}] bad value: {self.value}"
 
 
 class Field:
@@ -43,7 +48,7 @@ class FieldInstance:
     def set(self, value):
         for validator in self.validators:
             if not validator(value):
-                raise ValidatorError()
+                raise ValidatorError(validator, value)
         self.value = value
 
 

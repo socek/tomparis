@@ -1,9 +1,10 @@
-from tomparis.model import Model, Field
+from tomparis.fields import BoolField, StringField
+from tomparis.model import Model
 
 
 class VolumeMount(Model):
-    mount_path = Field(name="mountPath")
-    mount_propagation = Field(name="mountPropagation")
-    name = Field()
-    readOnly = Field()
-    sub_path = Field()
+    mount_path = StringField(name="mountPath")
+    mount_propagation = StringField(name="mountPropagation")
+    name = StringField()
+    readOnly = BoolField()
+    sub_path = StringField()

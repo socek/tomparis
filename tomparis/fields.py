@@ -1,12 +1,22 @@
 from tomparis.model import Field, FieldInstance, ValidatorError
 
 
+class StringDict(dict):
+    def __setitem__(self, key, value):
+        if not isinstance(value, str) and value is not None:
+            raise TypeError(f"{value} is not string!")
+        return super().__setitem__(key, value)
+
+
 class ValidateType:
     def __init__(self, cls):
         self.cls = cls
 
     def __call__(self, value):
-        return isinstance(value, self.cls)
+        return isinstance(value, self.cls) or value is None
+
+    def __str__(self):
+        return f"ValidateType:{self.cls.__name__}"
 
 
 class StringField(Field):
@@ -27,11 +37,31 @@ class IntField(Field):
         super().__init__(default, name, getter, validators)
 
 
+class PortField(Field):
+    def __init__(self, default=None, name=None, getter=None, validators=None):
+        validators = [ValidateType(int), self._validate_port] + (validators or [])
+        super().__init__(default, name, getter, validators)
+
+    def _validate_port(self, value):
+        return value >= 1 and value <= 65535
+
+
 class DictField(Field):
     def __init__(self, default=None, name=None, getter=None, validators=None):
-        validators = [ValidateType(dict)] + (validators or [])
+        validators = [ValidateType(StringDict)] + (validators or [])
+        default = default or StringDict
+        super().__init__(default, name, getter, validators)
+
+
+class EnumField(Field):
+    def __init__(self, enum, default=None, name=None, getter=None, validators=None):
+        validators = [ValidateType(str), self._validate_is_in_enum] + (validators or [])
         default = default or dict
         super().__init__(default, name, getter, validators)
+        self.enum = enum
+
+    def _validate_is_in_enum(self, value):
+        return value in self.enum
 
 
 class ValidatedList(list):

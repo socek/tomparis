@@ -1,9 +1,10 @@
-from tomparis.model import Model, Field
+from tomparis.fields import PortField, StringField
+from tomparis.model import Model
 
 
 class ContainerPort(Model):
-    container_port = Field(name="containerPort")
-    host_ip = Field(name="hostIP")
-    host_port = Field(name="hostPort")
-    name = Field()
-    protocol = Field()
+    container_port = PortField(name="containerPort")
+    host_ip = StringField(name="hostIP")
+    host_port = PortField(name="hostPort")
+    name = StringField()
+    protocol = StringField()

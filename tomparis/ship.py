@@ -1,5 +1,7 @@
+from __future__ import annotations
 import collections
 
+from tomparis.objects import KubernetesObject
 from tomparis.yamlrepresenter import tp_representer
 from yaml import add_representer, dump, safe_load
 
@@ -18,18 +20,18 @@ def deep_update_dict(orig_dict, new_dict):
 
 class Shipment:
     def __init__(self):
-        self.settings = {"core": {"autogenerate_uid": False}}
+        self.settings = {}
         self.kobjects = []
         self.shipments = []
 
-    def add_kobject(self, kobject):
+    def add_kobject(self, kobject: KubernetesObject):
         kobject.set_shipment(self)
         self.kobjects.append(kobject)
 
-    def add_shipment(self, shipment):
+    def add_shipment(self, shipment: Shipment):
         self.shipments.append(shipment)
 
-    def read_settings(self, filename):
+    def read_settings(self, filename: str):
         data = safe_load(open(filename))
         deep_update_dict(self.settings, data)
 

@@ -1,9 +1,10 @@
-from tomparis.model import Model, Field
+from tomparis.fields import ModelField, StringField
+from tomparis.model import Model
 
 from .env_var_source import EnvVarSource
 
 
 class EnvVar(Model):
-    name = Field()
-    value = Field()
-    value_from = Field(EnvVarSource, name="valueFrom")
+    name = StringField()
+    value = StringField()
+    value_from = ModelField(EnvVarSource, name="valueFrom")

@@ -1,7 +1,8 @@
-from tomparis.model import Model, Field
+from tomparis.fields import ListField, StringField
+from tomparis.model import Model
 
 
 class LabelSelectorRequirement(Model):
-    key = Field()
-    operator = Field()
-    values = Field(list)
+    key = StringField()
+    operator = StringField()
+    values = ListField(str)

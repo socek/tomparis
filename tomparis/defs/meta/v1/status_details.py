@@ -1,10 +1,13 @@
-from tomparis.model import Model, Field
+from tomparis.fields import IntField, ListField, StringField
+from tomparis.model import Model
+
+from .status_cause import StatusCause
 
 
 class StatusDetails(Model):
-    causes = Field(list)  # StatusCause
-    group = Field()
-    kind = Field()
-    name = Field()
-    retry_after_seconds = Field(name="retryAfterSeconds")
-    uid = Field()
+    causes = ListField(StatusCause)
+    group = StringField()
+    kind = StringField()
+    name = StringField()
+    retry_after_seconds = IntField(name="retryAfterSeconds")
+    uid = StringField()
