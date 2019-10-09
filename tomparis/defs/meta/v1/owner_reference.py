@@ -1,7 +1,7 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class OwnerReference(Config):
+class OwnerReference(Model):
     api_version = Field(name="apiVersion")
     block_owner_deletion = Field(name="blockOwnerDeletion")
     controller = Field()

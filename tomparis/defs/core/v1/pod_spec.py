@@ -1,8 +1,8 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 from tomparis.defs.core.v1.security_context import SecurityContext
 
 
-class PodSpec(Config):
+class PodSpec(Model):
     active_deadline_seconds = Field(name="activeDeadlineSeconds")
     affinity = Field(
         dict

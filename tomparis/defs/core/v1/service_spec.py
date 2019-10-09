@@ -1,9 +1,9 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 from .service_port import ServicePort
 
 
-class ServiceSpec(Config):
+class ServiceSpec(Model):
     cluster_ip = Field(name="clusterIP")
     external_ips = Field(list, name="externalIPs")
     external_name = Field(name="externalName")

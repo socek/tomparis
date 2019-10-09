@@ -1,4 +1,4 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 from tomparis.fields import BoolField, ListField, ModelField, StringField
 
 from .container_port import ContainerPort
@@ -9,7 +9,7 @@ from .security_context import SecurityContext
 from .volume_mount import VolumeMount
 
 
-class Container(Config):
+class Container(Model):
     args = ListField(str)
     command = ListField(str)
     env = ListField(EnvVar)

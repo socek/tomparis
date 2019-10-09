@@ -25,7 +25,7 @@ class FieldInstance:
     def _get_default(self, default, instance):
         if default:
             try:
-                if issubclass(default, (Config, dict, list)):
+                if issubclass(default, (Model, dict, list)):
                     return default()
                 else:
                     return default(instance)
@@ -47,7 +47,7 @@ class FieldInstance:
         self.value = value
 
 
-class Config:
+class Model:
     def __init__(self):
         self.shipment = None
         self.fields = {}
@@ -92,17 +92,17 @@ class Config:
         data = {}
         for field in self.fields.values():
             value = field.get()
-            if isinstance(value, Config):
+            if isinstance(value, Model):
                 value = value.serialize(self.shipment)
             elif isinstance(value, list):
                 value = [
-                    item.serialize(self.shipment) if isinstance(item, Config) else item
+                    item.serialize(self.shipment) if isinstance(item, Model) else item
                     for item in value
                 ]
             elif isinstance(value, dict):
                 value = {
                     key: item.serialize(self.shipment)
-                    if isinstance(item, Config)
+                    if isinstance(item, Model)
                     else item
                     for key, item in value.items()
                 }

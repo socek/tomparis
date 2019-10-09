@@ -1,7 +1,7 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class SELinuxOptions(Config):
+class SELinuxOptions(Model):
     level = Field()
     role = Field()
     type = Field()

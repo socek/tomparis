@@ -1,9 +1,9 @@
-from tomparis.config import Config
+from tomparis.model import Model
 from tomparis.defs.meta.v1 import ObjectMeta
 from tomparis.fields import StringField, ModelField
 
 
-class KubernetesObject(Config):
+class KubernetesObject(Model):
     api_version = None
     kind = None
 

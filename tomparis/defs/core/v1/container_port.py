@@ -1,7 +1,7 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class ContainerPort(Config):
+class ContainerPort(Model):
     container_port = Field(name="containerPort")
     host_ip = Field(name="hostIP")
     host_port = Field(name="hostPort")

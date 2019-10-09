@@ -1,7 +1,7 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class EnvVarSource(Config):
+class EnvVarSource(Model):
     config_map_key_ref = Field(
         dict, name="configMapKeyRef"
     )  # TODO: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#configmapkeyselector-v1-core

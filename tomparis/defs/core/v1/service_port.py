@@ -1,7 +1,7 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class ServicePort(Config):
+class ServicePort(Model):
     name = Field()
     node_port = Field(name="nodePort")
     port = Field()

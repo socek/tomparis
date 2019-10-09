@@ -1,6 +1,6 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class Capabilities(Config):
+class Capabilities(Model):
     add = Field()
     drop = Field()

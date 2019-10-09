@@ -1,7 +1,7 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class StatusDetails(Config):
+class StatusDetails(Model):
     causes = Field(list)  # StatusCause
     group = Field()
     kind = Field()

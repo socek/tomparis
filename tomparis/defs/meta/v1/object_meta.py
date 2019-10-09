@@ -1,11 +1,11 @@
 from uuid import uuid4
 
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 from .initializers import Initializers
 
 
-class ObjectMeta(Config):
+class ObjectMeta(Model):
     annotations = Field(dict)
     cluster_name = Field(name="clusterName")
     creation_timestamp = Field(name="creationTimestamp")

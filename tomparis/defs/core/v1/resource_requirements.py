@@ -1,11 +1,11 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class ResourceRequirementsElement(Config):
+class ResourceRequirementsElement(Model):
     cpu = Field()
     memory = Field()
 
 
-class ResourceRequirements(Config):
+class ResourceRequirements(Model):
     limits = Field(ResourceRequirementsElement)
     requests = Field(ResourceRequirementsElement)

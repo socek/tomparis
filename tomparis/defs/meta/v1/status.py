@@ -1,10 +1,10 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 from .list_meta import ListMeta
 from .status_details import StatusDetails
 
 
-class Status(Config):
+class Status(Model):
     api_version = Field(name="apiVersion")
     code = Field()
     details = Field(StatusDetails)

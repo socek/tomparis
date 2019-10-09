@@ -1,5 +1,5 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class Initializer(Config):
+class Initializer(Model):
     name = Field()

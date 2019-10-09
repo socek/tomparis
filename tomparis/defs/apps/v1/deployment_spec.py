@@ -1,21 +1,22 @@
-from tomparis.config import Config, Field
-from tomparis.defs.meta.v1 import LabelSelector, ObjectMeta
 from tomparis.defs.core.v1 import PodSpec
+from tomparis.defs.meta.v1 import LabelSelector, ObjectMeta
+from tomparis.fields import BoolField, IntField, ModelField
+from tomparis.model import Field, Model
 
 
-class PodTemplateSpec(Config):
-    metadata = Field(ObjectMeta)
-    spec = Field(PodSpec)
+class PodTemplateSpec(Model):
+    metadata = ModelField(ObjectMeta)
+    spec = ModelField(PodSpec)
 
 
-class DeploymentSpec(Config):
-    min_ready_seconds = Field(name="minReadySeconds")
-    paused = Field()
-    progress_deadline_seconds = Field(name="progressDeadlineSeconds")
-    replicas = Field()
-    revision_history_limit = Field(name="revisionHistoryLimit")
-    selector = Field(LabelSelector)
+class DeploymentSpec(Model):
+    min_ready_seconds = IntField(name="minReadySeconds")
+    paused = BoolField()
+    progress_deadline_seconds = IntField(name="progressDeadlineSeconds")
+    replicas = IntField()
+    revision_history_limit = IntField(name="revisionHistoryLimit")
+    selector = ModelField(LabelSelector)
     strategy = Field(
         dict
     )  # TODO: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#deploymentstrategy-v1-apps
-    template = Field(PodTemplateSpec)
+    template = ModelField(PodTemplateSpec)

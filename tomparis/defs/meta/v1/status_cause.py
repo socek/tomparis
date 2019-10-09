@@ -1,7 +1,7 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class StatusCause(Config):
+class StatusCause(Model):
     field = Field()
     message = Field()
     reason = Field()

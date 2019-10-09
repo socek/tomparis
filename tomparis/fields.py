@@ -1,4 +1,4 @@
-from tomparis.config import Field, FieldInstance, ValidatorError
+from tomparis.model import Field, FieldInstance, ValidatorError
 
 
 class ValidateType:

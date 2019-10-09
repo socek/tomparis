@@ -1,7 +1,7 @@
-from tomparis.config import Config, Field
+from tomparis.model import Model, Field
 
 
-class DeploymentStatus(Config):
+class DeploymentStatus(Model):
     available_replicas = Field(name="availableReplicas")
     collision_count = Field(name="collisionCount")
     conditions = Field(
