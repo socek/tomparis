@@ -1,42 +1,44 @@
 from tomparis.config import Config, Field
+from tomparis.fields import BoolField, ListField, ModelField, StringField
 
 from .container_port import ContainerPort
 from .env_var import EnvVar
+from .env_var_source import EnvVarSource
 from .resource_requirements import ResourceRequirements
 from .security_context import SecurityContext
 from .volume_mount import VolumeMount
 
 
 class Container(Config):
-    args = Field()
-    command = Field(list)
-    env = Field(list)  # EnvVar
-    env_from = Field(list, "envFrom")  # EnvVarSource
-    image = Field()
-    image_pull_policy = Field(name="imagePullPolicy")
+    args = ListField(str)
+    command = ListField(str)
+    env = ListField(EnvVar)
+    env_from = ListField(EnvVarSource, "envFrom")
+    image = StringField()
+    image_pull_policy = StringField(name="imagePullPolicy")
     lifecycle = Field(
         dict
     )  # TODO: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#lifecycle-v1-core
     liveness_probe = Field(
         dict, name="livenessProbe"
     )  # TODO: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#probe-v1-core
-    name = Field()
-    ports = Field(list)  # ContainerPort
+    name = StringField()
+    ports = ListField(ContainerPort)  #
     readiness_probe = Field(
         dict, name="readinessProbe"
     )  # TODO: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#probe-v1-core
-    resources = Field(ResourceRequirements)
-    security_context = Field(SecurityContext, "securityContext")
-    stdin = Field()
-    stdin_once = Field(name="stdinOnce")
-    termination_message_path = Field(name="terminationMessagePath")
-    termination_message_policy = Field(name="terminationMessagePolicy")
-    tty = Field()
-    volume_devices = Field(
-        list, name="volumeDevices"
+    resources = ModelField(ResourceRequirements)
+    security_context = ModelField(SecurityContext, "securityContext")
+    stdin = BoolField()
+    stdin_once = BoolField(name="stdinOnce")
+    termination_message_path = StringField(name="terminationMessagePath")
+    termination_message_policy = StringField(name="terminationMessagePolicy")
+    tty = BoolField()
+    volume_devices = ListField(
+        dict, name="volumeDevices"
     )  # TODO: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.10/#volumedevice-v1-core
-    volume_mounts = Field(list, "volumeMounts")
-    working_dir = Field(name="workingDir")
+    volume_mounts = ListField(VolumeMount, "volumeMounts")
+    working_dir = StringField(name="workingDir")
 
     def add_port(self, name=None, container_port=None, protocol=None):
         port = ContainerPort()

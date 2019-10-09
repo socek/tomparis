@@ -1,12 +1,11 @@
-from tomparis.config import Field
-from tomparis.objects import KubernetesObject
-
 from tomparis.defs.meta.v1 import ObjectMeta
+from tomparis.fields import DictField, ModelField
+from tomparis.objects import KubernetesObject
 
 
 class ConfigMap(KubernetesObject):
     api_version = "v1"
     kind = "ConfigMap"
-    data = Field(dict)
-    binary_data = Field(dict, "binaryData")
-    metadata = Field(ObjectMeta)
+    data = DictField()
+    binary_data = DictField(name="binaryData")
+    metadata = ModelField(ObjectMeta)

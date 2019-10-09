@@ -1,20 +1,26 @@
+class ValidatorError(Exception):
+    pass
+
+
 class Field:
-    def __init__(self, default=None, name=None, getter=None):
+    def __init__(self, default=None, name=None, getter=None, validators=None):
         self.name = name
         self.default = default
         self.getter = getter
+        self.validators = validators or []
 
     def __call__(self, instance, fieldname):
         return FieldInstance(
-            instance, self.name or fieldname, self.default, self.getter
+            instance, self.name or fieldname, self.default, self.getter, self.validators
         )
 
 
 class FieldInstance:
-    def __init__(self, instance, name, default, getter):
+    def __init__(self, instance, name, default, getter, validators=[]):
         self.name = name
         self.value = self._get_default(default, instance)
         self.getter = getter
+        self.validators = validators
 
     def _get_default(self, default, instance):
         if default:
@@ -35,6 +41,9 @@ class FieldInstance:
             return self.value
 
     def set(self, value):
+        for validator in self.validators:
+            if not validator(value):
+                raise ValidatorError()
         self.value = value
 
 
