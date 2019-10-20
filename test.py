@@ -1,14 +1,14 @@
 from tomparis.defs.apps.v1 import Deployment
 from tomparis.defs.core.v1 import ConfigMap, Container, Service
-from tomparis.ship import Shipment
+from tomparis.chart import Chart
 
 
 class MyConfig(ConfigMap):
     def prepare(self):
         self.metadata.name = "name"
-        self.metadata.namespace = "namespace"
         self.metadata.labels["hello"] = "me"
         self.data["elo"] = "CC"
+        self.data["my"] = "config"
 
 
 class MyService(Service):
@@ -43,13 +43,14 @@ class MyContainer(Container):
 class MyDeployment(Deployment):
     def prepare(self):
         self.add_container(MyContainer())
+        self.spec.selector.match_labels["name"] = "myname"
 
 
-shipment = Shipment()
-shipment.read_settings("values.yaml")
+chart = Chart()
+chart.read_settings("values.yaml")
 
 
-shipment.add_kobject(MyConfig())
-shipment.add_kobject(MyService())
-shipment.add_kobject(MyDeployment())
-shipment.generate()
+chart.add_kobject(MyConfig())
+chart.add_kobject(MyService())
+chart.add_kobject(MyDeployment())
+chart.generate()

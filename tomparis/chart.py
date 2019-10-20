@@ -18,18 +18,18 @@ def deep_update_dict(orig_dict, new_dict):
     return orig_dict
 
 
-class Shipment:
+class Chart:
     def __init__(self):
         self.settings = {}
         self.kobjects = []
-        self.shipments = []
+        self.charts = []
 
     def add_kobject(self, kobject: KubernetesObject):
-        kobject.set_shipment(self)
+        kobject.set_chart(self)
         self.kobjects.append(kobject)
 
-    def add_shipment(self, shipment: Shipment):
-        self.shipments.append(shipment)
+    def add_chart(self, chart: Chart):
+        self.charts.append(chart)
 
     def read_settings(self, filename: str):
         data = safe_load(open(filename))

@@ -54,7 +54,7 @@ class FieldInstance:
 
 class Model:
     def __init__(self):
-        self.shipment = None
+        self.chart = None
         self.fields = {}
         for attrname in dir(self):
             try:
@@ -65,7 +65,7 @@ class Model:
                 pass
 
     def __setattr__(self, key, value):
-        if key in ("shipment", "fields"):
+        if key in ("chart", "fields"):
             return super().__setattr__(key, value)
         elif key in self.fields:
             self.fields[key].set(value)
@@ -84,29 +84,29 @@ class Model:
 
     @property
     def settings(self):
-        return self.shipment.settings
+        return self.chart.settings
 
-    def set_shipment(self, shipment):
-        self.shipment = shipment
+    def set_chart(self, chart):
+        self.chart = chart
 
-    def serialize(self, shipment=None):
-        if shipment:
-            self.set_shipment(shipment)
+    def serialize(self, chart=None):
+        if chart:
+            self.set_chart(chart)
         self.prepare()
 
         data = {}
         for field in self.fields.values():
             value = field.get()
             if isinstance(value, Model):
-                value = value.serialize(self.shipment)
+                value = value.serialize(self.chart)
             elif isinstance(value, list):
                 value = [
-                    item.serialize(self.shipment) if isinstance(item, Model) else item
+                    item.serialize(self.chart) if isinstance(item, Model) else item
                     for item in value
                 ]
             elif isinstance(value, dict):
                 value = {
-                    key: item.serialize(self.shipment)
+                    key: item.serialize(self.chart)
                     if isinstance(item, Model)
                     else item
                     for key, item in value.items()
