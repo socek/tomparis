@@ -10,3 +10,6 @@ elo:
     - 1
     - 2
     - 3
+second:
+  name: "10"
+  from: "values"

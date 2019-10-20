@@ -1,6 +1,10 @@
-from tomparis.defs.apps.v1 import Deployment
-from tomparis.defs.core.v1 import ConfigMap, Container, Service
 from tomparis.chart import Chart
+from tomparis.defs.apps.v1 import Deployment
+from tomparis.defs.core.v1 import ConfigMap
+from tomparis.defs.core.v1 import Container
+from tomparis.defs.core.v1 import Service
+
+from test2 import MySecondChart
 
 
 class MyConfig(ConfigMap):
@@ -46,11 +50,23 @@ class MyDeployment(Deployment):
         self.spec.selector.match_labels["name"] = "myname"
 
 
-chart = Chart()
-chart.read_settings("values.yaml")
+class MyChart(Chart):
+    def prepare_requirements(self):
+        super().prepare_requirements()
+        self.add_chart(MySecondChart("mysecond"))
+
+    def prepare_settings(self):
+        super().prepare_settings()
+        self.read_settings("values.yaml")
+
+        self.charts["mysecond"].update_settings(self.settings["second"])
+
+    def prepare_chart(self):
+        super().prepare_chart()
+        self.add_kobject(MyConfig())
+        # self.add_kobject(MyService())
+        # self.add_kobject(MyDeployment())
 
 
-chart.add_kobject(MyConfig())
-chart.add_kobject(MyService())
-chart.add_kobject(MyDeployment())
-chart.generate()
+chart = MyChart()
+chart.printall()
