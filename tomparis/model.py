@@ -65,7 +65,7 @@ class Model:
                 pass
 
     def __setattr__(self, key, value):
-        if key in ("chart", "fields"):
+        if key in ("chart", "fields") or key.startswith("_"):
             return super().__setattr__(key, value)
         elif key in self.fields:
             self.fields[key].set(value)

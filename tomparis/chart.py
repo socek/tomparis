@@ -25,6 +25,7 @@ class Chart:
         self.settings = {}
         self.kobjects = []
         self.charts = OrderedDict()
+        self.prefix = self.name
 
     def add_kobject(self, kobject: KubernetesObject):
         kobject.set_chart(self)
@@ -32,13 +33,17 @@ class Chart:
 
     def add_chart(self, chart: Chart):
         self.charts[chart.name] = chart
-
-    def update_settings(self, settings: dict):
-        self.settings = deep_update_dict(self.settings, settings)
+        chart.prefix = f"{self.name}-{chart.prefix}"
 
     def read_settings(self, filename: str):
         data = safe_load(open(filename))
         deep_update_dict(self.settings, data)
+
+    def update_settings(self, settings: dict):
+        self.settings = deep_update_dict(self.settings, settings)
+
+    def update_subchart(self, name, settings):
+        self.charts[name].update_settings(self.settings[name])
 
     def prepare_requirements(self):
         for chart in self.charts.values():

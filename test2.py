@@ -4,7 +4,7 @@ from tomparis.defs.core.v1 import ConfigMap
 
 class MyConfig(ConfigMap):
     def prepare(self):
-        self.metadata.name = "name2"
+        super().prepare()
         self.metadata.labels["hello"] = "me"
         self.data["from"] = self.settings["from"]
 
@@ -16,4 +16,4 @@ class MySecondChart(Chart):
 
     def prepare_chart(self):
         super().prepare_chart()
-        self.add_kobject(MyConfig())
+        self.add_kobject(MyConfig("name2"))

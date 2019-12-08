@@ -1,5 +1,8 @@
+from tomparis.fields import BoolField
+from tomparis.fields import ListField
+from tomparis.fields import ModelField
+from tomparis.fields import StringField
 from tomparis.model import Model
-from tomparis.fields import BoolField, ListField, ModelField, StringField
 
 from .container_port import ContainerPort
 from .env_var import EnvVar
@@ -70,3 +73,13 @@ class Container(Model):
         volume.name = name
         volume.mount_path = mount_path
         self.volume_mounts.append(volume)
+
+    def set_image(self, repository: str, registry: str = None, tag: str = None):
+        if (repository or repository != "docker.io") and tag:
+            self.image = f"{registry}/{repository}:{tag}"
+        elif repository or repository != "docker.io":
+            self.image = f"{registry}/{repository}"
+        elif tag:
+            self.image = f"{repository}:tag"
+        else:
+            raise RuntimeError("This should not happen ever!")

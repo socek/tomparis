@@ -1,15 +1,23 @@
+from test2 import MySecondChart
 from tomparis.chart import Chart
+from tomparis.charts.postgresql.chart import PostgreSQLChart
 from tomparis.defs.apps.v1 import Deployment
 from tomparis.defs.core.v1 import ConfigMap
 from tomparis.defs.core.v1 import Container
+from tomparis.defs.core.v1 import Secret
 from tomparis.defs.core.v1 import Service
 
-from test2 import MySecondChart
+
+class MySecret(Secret):
+    def prepare(self):
+        super().prepare()
+        self.data["doom"] = "sdsadwq"
+        self.data["patrol"] = "xsew"
 
 
 class MyConfig(ConfigMap):
     def prepare(self):
-        self.metadata.name = "name"
+        super().prepare()
         self.metadata.labels["hello"] = "me"
         self.data["elo"] = "CC"
         self.data["my"] = "config"
@@ -17,6 +25,7 @@ class MyConfig(ConfigMap):
 
 class MyService(Service):
     def prepare(self):
+        super().prepare()
         self.metadata.name = "name-service"
         self.metadata.labels["thisis"] = "service"
         self.spec.add_port(80, 80, name="ups")
@@ -26,6 +35,7 @@ class MyService(Service):
 
 class MyContainer(Container):
     def prepare(self):
+        super().prepare()
         self.name = "backend"
         self.image_pull_policy = "IfNotPresent"
         self.add_port("http", 80, "TCP")
@@ -46,6 +56,7 @@ class MyContainer(Container):
 
 class MyDeployment(Deployment):
     def prepare(self):
+        super().prepare()
         self.add_container(MyContainer())
         self.spec.selector.match_labels["name"] = "myname"
 
@@ -53,20 +64,22 @@ class MyDeployment(Deployment):
 class MyChart(Chart):
     def prepare_requirements(self):
         super().prepare_requirements()
-        self.add_chart(MySecondChart("mysecond"))
+        # self.add_chart(MySecondChart("mysecond"))
+        self.add_chart(PostgreSQLChart("psql"))
 
     def prepare_settings(self):
         super().prepare_settings()
         self.read_settings("values.yaml")
 
-        self.charts["mysecond"].update_settings(self.settings["second"])
+        # self.update_subchart("mysecond", self.settings["mysecond"])
 
-    def prepare_chart(self):
-        super().prepare_chart()
-        self.add_kobject(MyConfig())
+    # def prepare_chart(self):
+    #     super().prepare_chart()
+    #     self.add_kobject(MySecret("MySecret"))
+    #     self.add_kobject(MyConfig("MyConfig"))
         # self.add_kobject(MyService())
         # self.add_kobject(MyDeployment())
 
 
-chart = MyChart()
+chart = MyChart("mychart")
 chart.printall()

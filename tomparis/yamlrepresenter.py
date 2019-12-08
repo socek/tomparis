@@ -4,6 +4,7 @@ SORTING = [
     "apiVersion",
     "kind",
     "metadata",
+    "type",
     "data",
     "spec",
     "template",

@@ -7,6 +7,7 @@ from .env_var_source import EnvVarSource
 from .pod_spec import PodSpec
 from .resource_requirements import ResourceRequirements
 from .se_linux_options import SELinuxOptions
+from .secret import Secret
 from .security_context import SecurityContext
 from .service import Service
 from .service_port import ServicePort
