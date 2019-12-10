@@ -1,10 +1,13 @@
 from __future__ import annotations
 
-from collections import Mapping, OrderedDict
+from collections import Mapping
+from collections import OrderedDict
 
 from tomparis.objects import KubernetesObject
 from tomparis.yamlrepresenter import tp_representer
-from yaml import add_representer, dump, safe_load
+from yaml import add_representer
+from yaml import dump
+from yaml import safe_load
 
 
 def deep_update_dict(orig_dict, new_dict):
@@ -74,3 +77,18 @@ class Chart:
         for kobject in self.generate():
             print("---")
             print(dump(kobject))
+
+    def stream(self):
+        self.prepare_requirements()
+        self.prepare_settings()
+        self.prepare_chart()
+
+        add_representer(dict, tp_representer)
+
+        stream = ""
+
+        for kobject in self.generate():
+            stream += "---\n"
+            stream += dump(kobject) + "\n"
+
+        return stream.encode()
